@@ -2,6 +2,8 @@
 
 Features
 
+udpate - commmit
+
 - What features are required for your minimum viable product?
 Onboarding process 
 Profile (editable)
