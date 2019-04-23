@@ -2,7 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Login from './components/Login';
-import GasPrices from './components/GasPrices';
+import { RegisterPage } from './components/Register';
+import { HomePage } from './components/HomePage';
+//import GasPrices from './components/GasPrices';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -18,7 +20,8 @@ function App() {
           </li>
         </ul>
         <Route path="/login" component={Login} />
-        <PrivateRoute exact path="/protected" component={GasPrices} />
+        <Route path="/register" component={RegisterPage} />
+        <PrivateRoute exact path="/protected" component={HomePage} />
       </div>
     </Router>
   );
