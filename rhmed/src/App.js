@@ -31,7 +31,7 @@ class App extends Component {
       axios.get(`${url}/api/procedures`, options)
         .then((res) => {
           if (res.status === 200 && res.data) {
-            this.setState({ loggedIn: true, jokes: res.data});
+            this.setState({ loggedIn: true, procs: res.data});
           }
           else {
             throw new Error();
@@ -48,6 +48,7 @@ class App extends Component {
 
   componentDidMount() {
     this.authenticate();
+    // console.log("Logged In:", this.state.loggedIn);
   }
 
   componentDidUpdate(prevProps) {
@@ -62,11 +63,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <h2>Welcome to Revolutionize Health</h2>
-        <nav>
-          <NavLink to="/">Home</NavLink> { '   ' }
-          <NavLink to="/login">Login</NavLink> { '   ' }
-          <NavLink to="/register">Register</NavLink>
+      <h1>Welcome to Revolutionize Health</h1>
+        <nav nav id="Nav_menu">
+          <NavLink 
+            className="Nav_link"
+            activeClassName="activeRoute"
+            activeStyle={{ color: 'black' }}
+            exact to="/">Home</NavLink>
+          <NavLink 
+            className="Nav_link"
+            activeClassName="activeRoute"
+            activeStyle={{ color: 'black' }}
+            to="/login">Login</NavLink>
+          <NavLink 
+            className="Nav_link"
+            activeClassName="activeRoute"
+            activeStyle={{ color: 'black' }}
+            to="/register">Register</NavLink>
         </nav>
         <section>
           <Switch>

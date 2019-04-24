@@ -12,23 +12,23 @@ export class Search extends Component {
     }
 
     componentDidMount() {
-        this.setState({ procs: dummyData });
+        this.setState({ procs: this.state.procs });
       }
 
     searchPostsHandler = e => {
-    const posts = this.state.posts.filter(p => {
-        if (p.username.includes(e.target.value)) {
+    const posts = this.state.procs.filter(p => {
+        if (p.procedure_name.includes(e.target.value)) {
         return p;
         }
     });
-    this.setState({ filteredPosts: posts });
+    this.setState({ filteredProcs: posts });
     };
     
     render() {
         return (
         <div>
             <input type="text"
-                placeholder="Enter 5 digit zip"
+                placeholder="Procedure"
                 onKeyDown={this.searchProcsHandler}
             />
         </div>
