@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import Register from './components/Register';
 import Login from './components/Login';
 import HomePage from './components/HomePage';
@@ -15,7 +15,7 @@ class App extends Component {
     super(props);
     this.state = {
       loggedIn: false,
-      jokes: []
+      procs: []
     };
   }
 
@@ -28,7 +28,7 @@ class App extends Component {
     };
 
     if (token) {
-      axios.get(`${url}/api/hospitals`, options)
+      axios.get(`${url}/api/procedures`, options)
         .then((res) => {
           if (res.status === 200 && res.data) {
             this.setState({ loggedIn: true, jokes: res.data});
