@@ -62,6 +62,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <h2>Welcome to Revolutionize Health</h2>
         <nav>
           <NavLink to="/">Home</NavLink> { '   ' }
           <NavLink to="/login">Login</NavLink> { '   ' }
