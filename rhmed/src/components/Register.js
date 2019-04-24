@@ -5,7 +5,7 @@ import axios from 'axios';
 const url = 'http://localhost:2000'
 
 const initialUser = {
-    username: '',
+    email: '',
     password: ''
 }
 
@@ -38,6 +38,7 @@ class Register extends Component {
                 }
             })
             .catch((err) => {
+                console.log(err);
                 this.setState({
                     message: 'Registration failed.',
                     user: { ...initialUser },
@@ -49,12 +50,12 @@ class Register extends Component {
         return (
             <div>
                 <form onSubmit={this.submitHandler}>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="email">Email</label>
                     <input
                         type="text"
-                        id="username"
-                        name="username"
-                        value={this.state.user.username}
+                        id="email"
+                        name="email"
+                        value={this.state.user.email}
                         onChange={this.inputHandler}
                     />
 

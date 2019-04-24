@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import Register from './components/Register';
 import Login from './components/Login';
+import HomePage from './components/HomePage';
+
 import { withRouter, Switch, Route, NavLink } from 'react-router-dom';
 import './App.css';
 
-const url = process.env.REACT_APP_API_URL;
+//const url = process.env.REACT_APP_API_URL;
+const url = 'http://localhost:2000'
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +28,7 @@ class App extends Component {
     };
 
     if (token) {
-      axios.get(`${url}/api/jokes`, options)
+      axios.get(`${url}/api/hospitals`, options)
         .then((res) => {
           if (res.status === 200 && res.data) {
             this.setState({ loggedIn: true, jokes: res.data});
@@ -60,31 +63,15 @@ class App extends Component {
     return (
       <div className="App">
         <nav>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/login">Login</NavLink>
+          <NavLink to="/">Home</NavLink> { '   ' }
+          <NavLink to="/login">Login</NavLink> { '   ' }
           <NavLink to="/register">Register</NavLink>
         </nav>
         <section>
           <Switch>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <Route path="/" render={() => {
-              return (
-                <React.Fragment>
-                  <h2>jokes</h2>
-                  <ol>
-                    {this.state.jokes.map(joke => {
-                      return(
-                        <div className="joke" key={joke.id}>
-                          <p>{joke.setup}</p>
-                          <p key={joke.id}>{joke.punchline}</p>
-                        </div>
-                      )
-                    })}
-                  </ol>
-                </React.Fragment>
-              );
-            }} />
+            <Route path="/" component={HomePage} />
           </Switch>
 
         </section>

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 //const url = process.env.REACT_APP_API_URL;
-const url = 'https://localhost:2000'
+const url = 'http://localhost:2000'
 
 const initialUser = {
-    username: '',
+    email: '',
     password: '',
 };
 
@@ -28,7 +28,7 @@ class Login extends Component {
         axios.post(`${url}/api/auth/login`, this.state.user)
             .then((res) => {
                 if (res.status === 200 && res.data) {
-                    console.log(res.data)
+                    console.log("res.data: ", res.data)
                     localStorage.setItem('secret_token', res.data.token);
                     this.props.history.push('/');
                 } else {
@@ -47,12 +47,12 @@ class Login extends Component {
         return (
             <div>
                 <form onSubmit={this.submitHandler}>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="email">Email</label>
                     <input
                         type="text"
-                        id="username"
-                        name="username"
-                        value={this.state.user.username}
+                        id="email"
+                        name="email"
+                        value={this.state.user.email}
                         onChange={this.inputHandler}
                     />
                     <label htmlFor="password">Password</label>
