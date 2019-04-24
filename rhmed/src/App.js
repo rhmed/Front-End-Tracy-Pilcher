@@ -31,7 +31,7 @@ class App extends Component {
       axios.get(`${url}/api/procedures`, options)
         .then((res) => {
           if (res.status === 200 && res.data) {
-            this.setState({ loggedIn: true, procs: res.data});
+            this.setState({ loaded: true, loggedIn: true, procs: res.data});
           }
           else {
             throw new Error();
@@ -45,16 +45,14 @@ class App extends Component {
       this.props.history.push('/login');
     }
   }
-
+  
   componentDidMount() {
     this.authenticate();
-    // console.log("Logged In:", this.state.loggedIn);
+    
   }
 
   componentDidUpdate(prevProps) {
     const { pathname } = this.props.location;
-    console.log(this.props);
-    console.log(prevProps);
     if (pathname === '/' && pathname !== prevProps.location.pathname) {
       this.authenticate();
     }
@@ -64,12 +62,8 @@ class App extends Component {
     return (
       <div className="App">
       <h1>Welcome to Revolutionize Health</h1>
+      {!this.state.loaded && 
         <nav nav id="Nav_menu">
-          <NavLink 
-            className="Nav_link"
-            activeClassName="activeRoute"
-            activeStyle={{ color: 'black' }}
-            exact to="/">Home</NavLink>
           <NavLink 
             className="Nav_link"
             activeClassName="activeRoute"
@@ -79,13 +73,18 @@ class App extends Component {
             className="Nav_link"
             activeClassName="activeRoute"
             activeStyle={{ color: 'black' }}
-            to="/register">Register</NavLink>
+            to="/register">Register</NavLink>        
         </nav>
+      }
         <section>
           <Switch>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <Route path="/" component={HomePage} />
+            {this.state.loaded && 
+            <Route path="/" 
+              render={() => <HomePage procs={this.state.procs} /> }
+               />
+              }
           </Switch>
 
         </section>
