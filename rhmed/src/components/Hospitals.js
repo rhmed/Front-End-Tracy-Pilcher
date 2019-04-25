@@ -11,7 +11,7 @@ export class Hospitals extends Component {
       hospitals: [],
       hospital: {},
       hospitalInput: '',
-      hospitalEdit: {}
+      hospitalToEdit: {}
     };
   }
   async componentDidMount() {
@@ -33,12 +33,12 @@ export class Hospitals extends Component {
 
 // PUT - Update a Hospital: /api/hospitals/:id 
 async editHospital(id) {
+  debugger
     const hospitalToEdit = this.state.hospitalEdit
     const {data} = await axios.put(`${url}/api/hospitals/${id}`, hospitalToEdit);
     const currentState = this.state.hospitals;
     this.setState({hospitals: currentState.concat(data)});
-    console.log("hospitalToEdit: ", hospitalToEdit);
-    console.log("data: ", data);
+   
    };
 
 // DELETE - Delete a Hospital: /api/hospitals/:id
@@ -67,21 +67,25 @@ async deleteHospital(id) {
     return (
       <div>
           <h2>Hospitals:</h2>
+          <hr />
         {this.state.hospitals.map(hospital => {
             const {hospital_id} = hospital;
             return (
                 <div>
-                <li key={hospital_id}>
+                <div key={hospital_id}>
                 {hospital.hospital_name} &nbsp;&nbsp;
-                {hospital.hospital_website} &nbsp;&nbsp;
-                <button onClick={() => this.editHospital(hospital_id)}>Edit</button>
+                website: {hospital.hospital_website} &nbsp;&nbsp;
+                {/* <button onClick={() => this.editHospital(hospital_id)}>Edit</button> */}
+
                 <button onClick={() => this.deleteHospital(hospital_id)}>Delete</button>
-                </li>
-                <hr />
-                <h2>Add a New Hospital</h2>
+                </div>
+
+
                 </div>
             )
         })}
+                  <hr />
+                  <h2>Add a New Hospital</h2>
       </div>
     )
   }
