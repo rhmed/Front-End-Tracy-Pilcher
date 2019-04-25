@@ -4,15 +4,17 @@ import axios from 'axios';
 //const url = process.env.REACT_APP_API_URL;
 const url = 'http://localhost:2000'
 
-export class Profile extends Component {
+export class Hospitals extends Component {
   constructor() {
     this.state = {
-      user: []
+      hospitals: [],
+      hospital: {}
+
     }
   }
   async componentDidMount() {
-    const {user} = await axios.get(`${url}/api/users/:id`);
-    this.setState({user: user});
+    const {hospitals} = await axios.get(`${url}/api/hospitals`);
+    this.setState({hospitals: hospitals});
   }
   render() {
     return (
@@ -23,4 +25,4 @@ export class Profile extends Component {
   }
 }
 
-export default Profile
+export default Hospitals;

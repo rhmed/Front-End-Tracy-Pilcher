@@ -28,9 +28,10 @@ class Login extends Component {
         axios.post(`${url}/api/auth/login`, this.state.user)
             .then((res) => {
                 if (res.status === 200 && res.data) {
-                    console.log("res.data: ", res.data)
+                    console.log("res.data: ", res.data);
+                    console.log("this.state.user: ", this.state.user);
                     localStorage.setItem('secret_token', res.data.token);
-                    localStorage.setItem('email', this.state.user.email);
+                    localStorage.setItem('user_id', this.state.user.user_id);
                     this.props.history.push('/');
                 } else {
                     throw new Error();
@@ -51,7 +52,7 @@ class Login extends Component {
                     <label htmlFor="email">Email: </label>
                     <input
                         type="text"
-                        id="email"
+                        // id="email"
                         name="email"
                         value={this.state.user.email}
                         onChange={this.inputHandler}
@@ -59,7 +60,7 @@ class Login extends Component {
                     <label htmlFor="password">Password: </label>
                     <input
                         type="password"
-                        id="password"
+                        // id="password"
                         name="password"
                         value={this.state.user.password}
                         onChange={this.inputHandler}

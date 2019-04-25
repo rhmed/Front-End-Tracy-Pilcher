@@ -56,7 +56,7 @@ class Register extends Component {
                 <label htmlFor="first_name">First Name: </label>
                     <input
                         type="text"
-                        id="first_name"
+                        // id="first_name"
                         name="first_name"
                         value={this.state.user.first_name}
                         onChange={this.inputHandler}
@@ -64,7 +64,7 @@ class Register extends Component {
                     <label htmlFor="last_name">Last Name: </label>
                     <input
                         type="last_name"
-                        id="last_name"
+                        // id="last_name"
                         name="last_name"
                         value={this.state.user.last_name}
                         onChange={this.inputHandler}
@@ -72,7 +72,7 @@ class Register extends Component {
                     <label htmlFor="email">Email: </label>
                     <input
                         type="text"
-                        id="email"
+                        // id="email"
                         name="email"
                         value={this.state.user.email}
                         onChange={this.inputHandler}
@@ -81,11 +81,18 @@ class Register extends Component {
                     <label htmlFor="password">Password: </label>
                     <input
                         type="text"
-                        id="password"
+                        // id="password"
                         name="password"
                         value={this.state.user.password}
                         onChange={this.inputHandler}
                     /><br/>
+                    <input 
+                        type="hidden"
+                        name="user_id"
+                        value={Date.now()}
+                        onChange={this.inputHandler}
+                    />
+
 
                     <button type="submit">Submit</button>
                 </form>

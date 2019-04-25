@@ -67,12 +67,14 @@ class App extends Component {
       }
     });
     this.setState({ filteredProcs: procs });
+    
   };
 
   render() {
     return (
       <div className="App">
       <h1>Welcome to Revolutionize Health</h1>
+      {/* {console.log("this.state.procs: ", this.state.procs)} */}
       {!this.state.loaded && 
         <nav nav id="Nav_menu">
         
