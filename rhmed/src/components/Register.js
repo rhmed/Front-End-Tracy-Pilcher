@@ -6,16 +6,18 @@ const url = 'http://localhost:2000'
 
 const initialUser = {
     email: '',
-    password: ''
-};
+    password: '',
+    first_name: '',
+    last_name: ''
+}
 
-class Login extends Component {
-    constructor(props) {
+class Register extends Component {
+    constructor(props){
         super(props);
         this.state = {
-            user: { ...initialUser },
+            user: {...initialUser},
             message: ''
-        };
+        }
     }
 
     inputHandler = (event) => {
@@ -23,23 +25,25 @@ class Login extends Component {
         this.setState({ user: { ...this.state.user, [name]: value } });
     }
 
+
     submitHandler = (event) => {
         event.preventDefault();
-        axios.post(`${url}/api/auth/login`, this.state.user)
+        axios.post(`${url}/api/auth/registration`, this.state.user)
             .then((res) => {
-                if (res.status === 200 && res.data) {
-                    console.log("res.data: ", res.data);
-                    console.log("this.state.user: ", this.state.user);
-                    localStorage.setItem('secret_token', res.data.token);
-                    localStorage.setItem('user_id', this.state.user.user_id);
-                    this.props.history.push('/');
+                if (res.status === 201) {
+                    localStorage.setItem('rhmed_email', this.state.user.email);
+                    this.setState({
+                        message: 'Registration successful',
+                        user: { ...initialUser },
+                    });
                 } else {
                     throw new Error();
                 }
             })
             .catch((err) => {
+                console.log(err);
                 this.setState({
-                    message: 'Authentication failed.',
+                    message: 'Registration failed.',
                     user: { ...initialUser },
                 });
             });
@@ -47,8 +51,24 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="user-form">
+            <div>
                 <form onSubmit={this.submitHandler}>
+                <label htmlFor="first_name">First Name: </label>
+                    <input
+                        type="text"
+                        // id="first_name"
+                        name="first_name"
+                        value={this.state.user.first_name}
+                        onChange={this.inputHandler}
+                    /><br/>
+                    <label htmlFor="last_name">Last Name: </label>
+                    <input
+                        type="last_name"
+                        // id="last_name"
+                        name="last_name"
+                        value={this.state.user.last_name}
+                        onChange={this.inputHandler}
+                    /><br/>
                     <label htmlFor="email">Email: </label>
                     <input
                         type="text"
@@ -57,14 +77,23 @@ class Login extends Component {
                         value={this.state.user.email}
                         onChange={this.inputHandler}
                     /><br/>
+
                     <label htmlFor="password">Password: </label>
                     <input
-                        type="password"
+                        type="text"
                         // id="password"
                         name="password"
                         value={this.state.user.password}
                         onChange={this.inputHandler}
                     /><br/>
+                    <input 
+                        type="hidden"
+                        name="user_id"
+                        value={Date.now()}
+                        onChange={this.inputHandler}
+                    />
+
+
                     <button type="submit">Submit</button>
                 </form>
                 {this.state.message ? (<h4>{this.state.message}</h4>) : undefined}
@@ -72,6 +101,7 @@ class Login extends Component {
 
         );
     }
-}
 
-export default Login;
+
+}
+export default Register;
