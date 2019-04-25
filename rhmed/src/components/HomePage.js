@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter, Switch, Route, NavLink } from 'react-router-dom';
 import Profile from './Profile';
 import AddProc from './AddProc';
-import Search from './Search';
 
 import '../App.css';
 
@@ -20,21 +19,17 @@ const HomePage = props => {
                 activeClassName="userActiveRoute"
                 activeStyle={{ color: 'white' }}
                 to="/add">Add New</NavLink> 
-            <NavLink 
-                className="User_Nav_link"
-                activeClassName="userActiveRoute"
-                activeStyle={{ color: 'white' }}
-                to="/search">Search</NavLink>
+
         </nav>
         <section>
           <Switch>
             <Route path="/profile" component={Profile} />
             <Route path="/add" component={AddProc} />
-            <Route path="/search" component={Search} />
           </Switch>
         </section>
         <main>
         <h3>Recent Procedures:</h3>
+
         {props.procs.map(p => <div className="procedure-item" key={p.procedure_id}>{p.procedure_name} USD ${p.cost}</div>)}
         
         </main>

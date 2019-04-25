@@ -6,7 +6,9 @@ const url = 'http://localhost:2000'
 
 const initialUser = {
     email: '',
-    password: ''
+    password: '',
+    first_name: '',
+    last_name: ''
 }
 
 class Register extends Component {
@@ -29,6 +31,7 @@ class Register extends Component {
         axios.post(`${url}/api/auth/registration`, this.state.user)
             .then((res) => {
                 if (res.status === 201) {
+                    localStorage.setItem('rhmed_email', this.state.user.email);
                     this.setState({
                         message: 'Registration successful',
                         user: { ...initialUser },
@@ -50,23 +53,39 @@ class Register extends Component {
         return (
             <div>
                 <form onSubmit={this.submitHandler}>
-                    <label htmlFor="email">Email</label>
+                <label htmlFor="first_name">First Name: </label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        value={this.state.user.first_name}
+                        onChange={this.inputHandler}
+                    /><br/>
+                    <label htmlFor="last_name">Last Name: </label>
+                    <input
+                        type="last_name"
+                        id="last_name"
+                        name="last_name"
+                        value={this.state.user.last_name}
+                        onChange={this.inputHandler}
+                    /><br/>
+                    <label htmlFor="email">Email: </label>
                     <input
                         type="text"
                         id="email"
                         name="email"
                         value={this.state.user.email}
                         onChange={this.inputHandler}
-                    />
+                    /><br/>
 
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Password: </label>
                     <input
                         type="text"
                         id="password"
                         name="password"
                         value={this.state.user.password}
                         onChange={this.inputHandler}
-                    />
+                    /><br/>
 
                     <button type="submit">Submit</button>
                 </form>

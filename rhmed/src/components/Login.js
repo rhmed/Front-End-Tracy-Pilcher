@@ -6,7 +6,7 @@ const url = 'http://localhost:2000'
 
 const initialUser = {
     email: '',
-    password: '',
+    password: ''
 };
 
 class Login extends Component {
@@ -30,6 +30,7 @@ class Login extends Component {
                 if (res.status === 200 && res.data) {
                     console.log("res.data: ", res.data)
                     localStorage.setItem('secret_token', res.data.token);
+                    localStorage.setItem('email', this.state.user.email);
                     this.props.history.push('/');
                 } else {
                     throw new Error();
@@ -45,24 +46,24 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div className="user-form">
                 <form onSubmit={this.submitHandler}>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email: </label>
                     <input
                         type="text"
                         id="email"
                         name="email"
                         value={this.state.user.email}
                         onChange={this.inputHandler}
-                    />
-                    <label htmlFor="password">Password</label>
+                    /><br/>
+                    <label htmlFor="password">Password: </label>
                     <input
                         type="password"
                         id="password"
                         name="password"
                         value={this.state.user.password}
                         onChange={this.inputHandler}
-                    />
+                    /><br/>
                     <button type="submit">Submit</button>
                 </form>
                 {this.state.message ? (<h4>{this.state.message}</h4>) : undefined}

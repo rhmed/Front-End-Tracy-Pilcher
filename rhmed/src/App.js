@@ -15,7 +15,8 @@ class App extends Component {
     super(props);
     this.state = {
       loggedIn: false,
-      procs: []
+      procs: [],
+      filteredProcs: []
     };
   }
 
@@ -58,12 +59,23 @@ class App extends Component {
     }
   }
 
+  searchPostsHandler = e => {
+    // eslint-disable-next-line
+    const procs = this.state.procs.filter(p => {
+      if (p.procedure_name.includes(e.target.value)) {
+        return p;
+      }
+    });
+    this.setState({ filteredProcs: procs });
+  };
+
   render() {
     return (
       <div className="App">
       <h1>Welcome to Revolutionize Health</h1>
       {!this.state.loaded && 
         <nav nav id="Nav_menu">
+        
           <NavLink 
             className="Nav_link"
             activeClassName="activeRoute"
@@ -73,21 +85,37 @@ class App extends Component {
             className="Nav_link"
             activeClassName="activeRoute"
             activeStyle={{ color: 'black' }}
-            to="/register">Register</NavLink>        
+            to="/register">Register</NavLink>     
+       
         </nav>
       }
+    
         <section>
           <Switch>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             {this.state.loaded && 
             <Route path="/" 
-              render={() => <HomePage procs={this.state.procs} /> }
+              render={() => <HomePage 
+                procs={
+                  this.state.filteredProcs.length > 0
+                ? this.state.filteredProcs
+                : this.state.procs} 
+                /> 
+              }
                />
               }
+              
           </Switch>
-
         </section>
+        {this.state.loaded && 
+        <div className="search-box">
+          <input 
+            type="text"
+            placeholder="Search Procedures"
+            onKeyDown={this.searchPostsHandler}></input>
+        </div>
+        }
       </div>
     );
   }
