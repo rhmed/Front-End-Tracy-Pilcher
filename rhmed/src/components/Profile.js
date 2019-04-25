@@ -6,6 +6,7 @@ const url = 'http://localhost:2000'
 
 export class Profile extends Component {
   constructor() {
+    super();
     this.state = {
       user: []
     }

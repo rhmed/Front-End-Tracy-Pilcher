@@ -6,20 +6,77 @@ const url = 'http://localhost:2000'
 
 export class Hospitals extends Component {
   constructor() {
+      super();
     this.state = {
       hospitals: [],
-      hospital: {}
-
-    }
+      hospital: {},
+      hospitalInput: '',
+      hospitalEdit: ''
+    };
   }
   async componentDidMount() {
-    const {hospitals} = await axios.get(`${url}/api/hospitals`);
-    this.setState({hospitals: hospitals});
+    const {data} = await axios.get(`${url}/api/hospitals`);
+    this.setState({hospitals: data});
+  };
+
+  //POST - Add a hospital
+
+  async addHospital() {
+    const hospitalToAdd = this.state.hospitalInput;
+    const {data} = await axios.post(`${url}/api/hospitals`, hospitalToAdd);
+    const currentState = this.state.hospitals;
+    this.setState({
+        hospitals: currentState.concat(data),
+        hospitalInput: ''
+        });
+  };
+
+// PUT - Update a Hospital: /api/hospitals/:id 
+async editHospital(id) {
+    const hospitalToEdit = this.state.hospitalEdit
+    const {data} = await axios.put(`/api/hospitals/${id}`, hospitalToEdit);
+    const currentState = this.state.hospitals;
+    this.setState({hospitals: currentState.concat(data)});
+   };
+
+// DELETE - Delete a Hospital: /api/hospitals/:id
+async deleteHospital(id) {
+    await axios.delete(`/api/hospitals/${id}`);
+    let hospitalsCopy = this.state.hospitals 
+    for (let i = 0; i < hospitalsCopy.length; i++) {
+        let hospital = hospitalsCopy[i]
+    if (hospital.hospital_id === id) { 
+        hospitalsCopy.splice(i, 1)  // delete the item 
+      break                   
+    }
   }
+  this.setState({hospitals: hospitalsCopy});
+  this.props.history.push(`/hospitals`)
+}  
+
+  handleChange = e => {
+    this.setState({
+        [e.target.name]: e.target.value
+      });   
+  };
+
   render() {
     return (
       <div>
-        
+          <h2>Hospitals:</h2>
+        {this.state.hospitals.map(hospital => {
+            const {hospital_id} = hospital;
+            return (
+                <div>
+                <li key={hospital_id}>
+                {hospital.hospital_name} &nbsp;&nbsp;
+                {hospital.hospital_website} &nbsp;&nbsp;
+                <button onClick={() => this.editHospital(hospital_id)}>Edit</button>
+                </li>
+                <hr />
+                </div>
+            )
+        })}
       </div>
     )
   }
