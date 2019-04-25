@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 
-//const url = process.env.REACT_APP_API_URL;
-const url = 'http://localhost:2000'
+const url = process.env.REACT_APP_API_URL;
+
 
 export class Profile extends Component {
   constructor() {
