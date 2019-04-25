@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter, Switch, Route, NavLink } from 'react-router-dom';
-import Profile from './Profile';
 import AddProc from './AddProc';
 import Hospitals from './Hospitals';
 
@@ -10,11 +9,6 @@ const HomePage = props => {
     return (
       <div>
         <nav id="User_Nav_menu">
-            <NavLink
-                className="User_Nav_link"
-                activeClassName="userActiveRoute"
-                activeStyle={{ color: 'white' }}
-                to="/profile">Profile</NavLink>
             <NavLink 
                 className="User_Nav_link"
                 activeClassName="userActiveRoute"
@@ -29,7 +23,6 @@ const HomePage = props => {
         </nav>
         <section>
           <Switch>
-            <Route path="/profile" component={Profile} />
             <Route path="/add" component={AddProc} />
             <Route path="/hospitals" component={Hospitals} />
           </Switch>

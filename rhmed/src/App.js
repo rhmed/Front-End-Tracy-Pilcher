@@ -7,8 +7,8 @@ import HomePage from './components/HomePage';
 import { withRouter, Switch, Route, NavLink } from 'react-router-dom';
 import './App.css';
 
-const url = process.env.REACT_APP_API_URL;
-
+// const url = process.env.REACT_APP_API_URL;
+const url = 'https://revo-health.herokuapp.com';
 
 class App extends Component {
   constructor(props) {

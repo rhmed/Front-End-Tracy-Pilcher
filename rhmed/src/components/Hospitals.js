@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 
- const url = process.env.REACT_APP_API_URL;
-
+// const url = process.env.REACT_APP_API_URL;
+const url = 'https://revo-health.herokuapp.com';
 
 export class Hospitals extends Component {
   constructor() {
@@ -37,6 +37,8 @@ async editHospital(id) {
     const {data} = await axios.put(`${url}/api/hospitals/${id}`, hospitalToEdit);
     const currentState = this.state.hospitals;
     this.setState({hospitals: currentState.concat(data)});
+    console.log("hospitalToEdit: ", hospitalToEdit);
+    console.log("data: ", data);
    };
 
 // DELETE - Delete a Hospital: /api/hospitals/:id
