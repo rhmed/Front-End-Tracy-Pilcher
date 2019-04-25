@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 
-//const url = process.env.REACT_APP_API_URL;
-const url = 'http://localhost:2000'
+ const url = process.env.REACT_APP_API_URL;
+
 
 export class Hospitals extends Component {
   constructor() {
@@ -11,7 +11,7 @@ export class Hospitals extends Component {
       hospitals: [],
       hospital: {},
       hospitalInput: '',
-      hospitalEdit: ''
+      hospitalEdit: {}
     };
   }
   async componentDidMount() {
@@ -34,14 +34,14 @@ export class Hospitals extends Component {
 // PUT - Update a Hospital: /api/hospitals/:id 
 async editHospital(id) {
     const hospitalToEdit = this.state.hospitalEdit
-    const {data} = await axios.put(`/api/hospitals/${id}`, hospitalToEdit);
+    const {data} = await axios.put(`${url}/api/hospitals/${id}`, hospitalToEdit);
     const currentState = this.state.hospitals;
     this.setState({hospitals: currentState.concat(data)});
    };
 
 // DELETE - Delete a Hospital: /api/hospitals/:id
 async deleteHospital(id) {
-    await axios.delete(`/api/hospitals/${id}`);
+    await axios.delete(`${url}/api/hospitals/${id}`);
     let hospitalsCopy = this.state.hospitals 
     for (let i = 0; i < hospitalsCopy.length; i++) {
         let hospital = hospitalsCopy[i]
@@ -55,6 +55,7 @@ async deleteHospital(id) {
 }  
 
   handleChange = e => {
+    e.preventDefault();
     this.setState({
         [e.target.name]: e.target.value
       });   
@@ -72,8 +73,10 @@ async deleteHospital(id) {
                 {hospital.hospital_name} &nbsp;&nbsp;
                 {hospital.hospital_website} &nbsp;&nbsp;
                 <button onClick={() => this.editHospital(hospital_id)}>Edit</button>
+                <button onClick={() => this.deleteHospital(hospital_id)}>Delete</button>
                 </li>
                 <hr />
+                <h2>Add a New Hospital</h2>
                 </div>
             )
         })}
