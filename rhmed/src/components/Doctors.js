@@ -84,8 +84,7 @@ async deleteDoctor(id) {
                 </div>
             )
         })}
-                  <hr />
-                  <h2>Add a New Doctor</h2>
+  
       </div>
     )
   }

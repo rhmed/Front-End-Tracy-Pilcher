@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 // const url = process.env.REACT_APP_API_URL;
-const url = 'https://revo-health.herokuapp.com';
+//const url = 'https://revo-health.herokuapp.com';
+const url= 'http://localhost:2000';
 
 const initialUser = {
     email: '',
@@ -92,8 +93,6 @@ class Register extends Component {
                         value={Date.now()}
                         onChange={this.inputHandler}
                     />
-
-
                     <button type="submit">Submit</button>
                 </form>
                 {this.state.message ? (<h4>{this.state.message}</h4>) : undefined}

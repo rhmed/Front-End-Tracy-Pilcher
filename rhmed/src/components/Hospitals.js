@@ -84,8 +84,7 @@ async deleteHospital(id) {
                 </div>
             )
         })}
-                  <hr />
-                  <h2>Add a New Hospital</h2>
+ 
       </div>
     )
   }

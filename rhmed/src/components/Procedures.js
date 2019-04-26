@@ -2,48 +2,49 @@ import React, { Component } from 'react'
 import axios from 'axios';
 
 // const url = process.env.REACT_APP_API_URL;
-const url = 'https://revo-health.herokuapp.com';
+//const url = 'https://revo-health.herokuapp.com';
+const url= 'http://localhost:2000';
+
 
 export class Procedures extends Component {
   constructor() {
       super();
     this.state = {
       procedures: [],
-      procedure: {},
-      procedureInput: '',
-      procedureToEdit: {},
-      items: [],
-      filteredItems: [],
-      list: []
+      procedure: {
+        procedure_name: '',
+        cost: ''
+      }
     };
   }
+  
+
   async componentDidMount() {
     const {data} = await axios.get(`${url}/api/procedures`);
     this.setState({procedures: data});
   };
-
-  //POST - Add a procedure
-
-  async addProcedure() {
-    const procedureToAdd = this.state.procedureInput;
-    const {data} = await axios.post(`${url}/api/procedures`, procedureToAdd);
-    const currentState = this.state.procedures;
-    this.setState({
-        procedures: currentState.concat(data),
-        procedureInput: ''
+ 
+  addProcedure = e => {
+    console.log("this.state.procedure: ", this.state.procedure);
+      e.preventDefault();
+      axios.post(`${url}/api/procedures`, this.state.procedure)
+      .then(response => {
+        console.log("NewProc: ", response);
+        const currentState = this.state.procedures;
+        this.setState({
+          procedures: currentState.concat(this.state.procedure),
+          procedure: {
+            procedure_name: '',
+            cost: ''
+          }
         });
-  };
 
-// PUT - Update a Procedure: /api/procedures/:id 
-async editProcedure(id) {
-  debugger
-    const procedureToEdit = this.state.procedureEdit
-    const {data} = await axios.put(`${url}/api/procedures/${id}`, procedureToEdit);
-    const currentState = this.state.procedures;
-    this.setState({procedures: currentState.concat(data)});
-   
-   };
-
+        this.props.history.push(`/procedures`);
+      })
+      .catch(err => {
+        console.log("Rejected:", err);
+      });
+  }
 // DELETE - Delete a Procedure: /api/procedures/:id
 async deleteProcedure(id) {
     await axios.delete(`${url}/api/procedures/${id}`);
@@ -62,27 +63,18 @@ async deleteProcedure(id) {
   handleChange = e => {
     e.preventDefault();
     this.setState({
-        [e.target.name]: e.target.value
+        procedure: {
+          ...this.state.procedure,
+          [e.target.name]: e.target.value
+        }
       });   
-  };
-  //SEARCH
-  searchPostsHandler = e => {
-    const items = this.state.items.filter(item => {
-      if (item.procedure_name.includes(e.target.value)) {
-        return items;
-      }
-    });
-    this.setState({ filteredItems: items });   
   };
 
   render() {
     return (
       <div>
           <h2>Procedures:</h2>
-          <hr />
-         {/* {list = this.state.filteredItems.length > 0
-              ? this.state.filteredItems
-              : this.state.procedures} */}
+          <hr />       
         {this.state.procedures.map(procedure => {
             const {procedure_id} = procedure;
             return (
@@ -90,8 +82,7 @@ async deleteProcedure(id) {
                 <div key={procedure_id}>
                 {procedure.procedure_name} &nbsp;&nbsp;
                 USD$: {procedure.cost} &nbsp;&nbsp;
-                {/* <button onClick={() => this.editProcedure(procedure_id)}>Edit</button> */}
-
+                procedure_id: {procedure.procedure_id} &nbsp;&nbsp;
                 <button onClick={() => this.deleteProcedure(procedure_id)}>Delete</button>
                 </div>
       </div>
@@ -99,15 +90,27 @@ async deleteProcedure(id) {
         })}
           <hr />
           <h2>Add a New Procedure</h2>
+          <div className='item-form'>
+            <form onSubmit={this.addProcedure}>
+            <h3>Procedure Desc:</h3>
+              <input
+                type='text'
+                value={this.state.procedure.procedure_name}
+                name='procedure_name'
+                onChange={this.handleChange}
+              /><br />
+              <h3>Procedure Cost:</h3>
+                <input
+                type='text'
+                value={this.state.procedure.cost}
+                name='cost'
+                onChange={this.handleChange}
+              /><br />
+              <button>Add</button>
+            </form>           
+          </div>
           <hr />
-          <h2>Search:</h2>
-          <div className="search-box">
-          <input 
-            type="text"
-            placeholder="Search Procedures"
-            onKeyDown={this.searchPostsHandler}></input>
         </div>
-      </div>
     )
   }
 }

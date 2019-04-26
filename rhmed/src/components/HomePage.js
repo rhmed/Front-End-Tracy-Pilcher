@@ -25,7 +25,6 @@ const HomePage = props => {
                 activeClassName="userActiveRoute"
                 activeStyle={{ color: 'white' }}
                 to="/doctors">Doctors</NavLink> 
-
         </nav>
         <section>
           <Switch>
