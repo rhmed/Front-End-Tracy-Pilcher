@@ -86,7 +86,6 @@ async deleteProcedure(id) {
                 <div key={procedure_id}>
                 {procedure.procedure_name} &nbsp;&nbsp;
                 USD$: {procedure.cost} &nbsp;&nbsp;
-                procedure_id: {procedure.procedure_id} &nbsp;&nbsp;
                 <button onClick={() => this.deleteProcedure(procedure_id)}>Delete</button>
                 </div>
       </div>
