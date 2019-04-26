@@ -30,9 +30,13 @@ export class Procedures extends Component {
       axios.post(`${url}/api/procedures`, this.state.procedure)
       .then(response => {
         console.log("NewProc: ", response);
+        const newProcedure = {
+          ...this.state.procedure, 
+          procedure_id: response.data.procedure_id
+        }
         const currentState = this.state.procedures;
         this.setState({
-          procedures: currentState.concat(this.state.procedure),
+          procedures: currentState.concat(newProcedure),
           procedure: {
             procedure_name: '',
             cost: ''
